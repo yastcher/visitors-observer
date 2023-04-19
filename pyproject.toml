@@ -12,11 +12,15 @@ packages = [{include = "visitors_observer"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-#torch = { version = "^1.10.0", markers = "cpu" }
+uvicorn = "^0.21.1"
 fastapi = "^0.95.1"
+python-multipart = "^0.0.6"
+opencv-python-headless = "^4.7.0"
+#torch = { version = "^1.10.0", markers = "cpu" }
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.3.1"
+httpx = "^0.24.0"
 
 [tool.poetry.scripts]
 

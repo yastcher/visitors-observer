@@ -26,3 +26,19 @@ Install requirements:
     ```sh
     poetry install
     ```
+
+Start app:
+    ```sh
+    uvicorn main:app --host 127.0.0.1 --port 5555
+    ```
+
+Autodocumentation (swagger):
+    ```sh
+    http://127.0.0.1:5555/docs
+    http://127.0.0.1:5555/redoc
+    ```
+
+Run tests (pytest):
+    ```sh
+    pytest
+    ```
