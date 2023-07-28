@@ -5,7 +5,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 import config
-from api.endpoints import router
+from api import router
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 

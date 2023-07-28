@@ -24,6 +24,8 @@ async def api_check_photo(request: Request, file: UploadFile = File(...)):
     """
     try:
         contents = await file.read()
+        if contents is None:
+            raise Exception("UploadFileException = contents is None")
         img = np.frombuffer(contents, np.uint8)
         img = cv2.imdecode(img, cv2.IMREAD_UNCHANGED)
         im_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
