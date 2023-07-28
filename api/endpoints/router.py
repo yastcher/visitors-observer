@@ -1,9 +1,12 @@
 import logging
+from io import BytesIO
 
 import cv2
 import numpy as np
 from fastapi import APIRouter, Request, File, UploadFile
 
+import config
+from tbot.command import bot
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +25,13 @@ async def api_check_photo(request: Request, file: UploadFile = File(...)):
     try:
         contents = await file.read()
         img = np.frombuffer(contents, np.uint8)
-        photo = cv2.imdecode(img, cv2.IMREAD_UNCHANGED)
+        img = cv2.imdecode(img, cv2.IMREAD_UNCHANGED)
+        im_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+        # ToDo =Y add image analyze
+
+        photo_file = BytesIO(contents)
+        await bot.send_photo(chat_id=config.CHAT_ID, photo=photo_file)
 
         info_message = "Mock"
         status_to_create = 0

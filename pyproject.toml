@@ -8,19 +8,21 @@ version = "0.1.0"
 description = ""
 authors = ["yastcher <yastcher@gmail.com>"]
 readme = "README.md"
-packages = [{include = "visitors_observer"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-uvicorn = "^0.21.1"
-fastapi = "^0.95.1"
-python-multipart = "^0.0.6"
-opencv-python-headless = "^4.7.0"
+uvicorn = ">0.22.0"
+fastapi = ">0.96.0"
+python-multipart = ">0.0.6"
+python-telegram-bot = ">20.3"
+#python-telegram-bot = {extras = ["http2"], version = "^20.3"}
+#httpx = {extras = ["http2"], version = "^0.24.0"}
+#h2 = "^4.1.0"
+opencv-python-headless = ">4.7.0"
 #torch = { version = "^1.10.0", markers = "cpu" }
 
 [tool.poetry.dev-dependencies]
-pytest = "^7.3.1"
-httpx = "^0.24.0"
+pytest = ">7.3.1"
 
 [tool.poetry.scripts]
 
