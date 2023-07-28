@@ -1,15 +1,18 @@
 import datetime
 import logging
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-from api import config
+import config
 from api.endpoints import router
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
-app = FastAPI()
+
+app = FastAPI(
+    **config.KWARGS_OPEN_API,
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -22,20 +25,10 @@ app.add_middleware(
 app.include_router(router.from_apps)
 
 
-@app.on_event("startup")
-async def startup_event():
-    pass
-
-
 @app.get("/")
-async def healthcheck():
+async def healthcheck(request: Request):
     return {
         "status": "OK",
         "timestamp": datetime.datetime.utcnow(),
         "swagger": "http://127.0.0.1:5555/docs",
     }
-
-
-@app.on_event("shutdown")
-def shutdown_event():
-    pass
