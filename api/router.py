@@ -6,6 +6,7 @@ import numpy as np
 from fastapi import APIRouter, Request, File, UploadFile
 
 import config
+from cv.face_detector import mtcnn
 from tbot.command import bot
 
 logger = logging.getLogger(__name__)
@@ -30,13 +31,15 @@ async def api_check_photo(request: Request, file: UploadFile = File(...)):
         img = cv2.imdecode(img, cv2.IMREAD_UNCHANGED)
         im_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-        # ToDo =Y add image analyze
+        boxes, probs, landmarks_all = mtcnn.detect(im_rgb, landmarks=True)
+        if boxes is None:
+            raise Exception("faces not found")
+
+        info_message = f"{len(boxes)} faces founded"
+        status_to_create = 0
 
         photo_file = BytesIO(contents)
         await bot.send_photo(chat_id=config.CHAT_ID, photo=photo_file)
-
-        info_message = "Mock"
-        status_to_create = 0
 
         response = {"message": info_message, "data": info_message, "status": status_to_create}
     except Exception as exc:

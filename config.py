@@ -3,6 +3,7 @@ import logging
 import os
 import sys
 
+import torch
 
 DEBUG = bool(int(os.getenv("DEBUG", True)))
 
@@ -10,6 +11,12 @@ DEBUG = bool(int(os.getenv("DEBUG", True)))
 KWARGS_OPEN_API = {
     "title": "Visitor observer", "docs_url": "/docs", "redoc_url": "/redoc",
 } if DEBUG else {"docs_url": None, "redoc_url": None}
+
+
+if torch.cuda.is_available():
+    INFERENCE_DEVICE = "cuda"
+else:
+    INFERENCE_DEVICE = "cpu"
 
 
 LOG_SAVE_TO_FILE = bool(int(os.getenv("LOG_SAVE_TO_FILE", False)))
