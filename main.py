@@ -32,3 +32,8 @@ async def healthcheck(request: Request):
         "timestamp": datetime.datetime.utcnow(),
         "swagger": "http://127.0.0.1:5555/docs",
     }
+
+
+@app.get("/status")
+async def health_check():
+    return {"status": "OK", "timestamp": datetime.datetime.now()}
