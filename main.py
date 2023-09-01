@@ -1,22 +1,25 @@
 import datetime
+import json
 import logging
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-import config
+from config import settings
 from api import router
 
-logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+logging.basicConfig(level=logging.DEBUG if settings.debug else logging.INFO)
 
 
-app = FastAPI(
-    **config.KWARGS_OPEN_API,
-)
+KWARGS_OPEN_API = {
+    "title": "Visitor observer", "docs_url": "/docs", "redoc_url": "/redoc",
+} if settings.debug else {"docs_url": None, "redoc_url": None}
+app = FastAPI(**KWARGS_OPEN_API)
+
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=config.CORS_ALLOW_ORIGINS,
+    allow_origins=json.dumps(settings.cors_allow_origins),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -26,7 +29,7 @@ app.include_router(router.from_apps)
 
 
 @app.get("/")
-async def healthcheck(request: Request):
+async def root_endpoint(request: Request):
     return {
         "status": "OK",
         "timestamp": datetime.datetime.utcnow(),

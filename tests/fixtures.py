@@ -3,4 +3,4 @@ import pytest
 
 @pytest.fixture()
 def healthcheck():
-    return "/"
+    return "/status"

@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 from fastapi import APIRouter, Request, File, UploadFile
 
-import config
+from config import settings
 from cv.face_detector import mtcnn
 from tbot.command import bot
 
@@ -39,7 +39,7 @@ async def api_check_photo(request: Request, file: UploadFile = File(...)):
         status_to_create = 0
 
         photo_file = BytesIO(contents)
-        await bot.send_photo(chat_id=config.CHAT_ID, photo=photo_file)
+        await bot.send_photo(chat_id=settings.chat_id, photo=photo_file)
 
         response = {"message": info_message, "data": info_message, "status": status_to_create}
     except Exception as exc:
