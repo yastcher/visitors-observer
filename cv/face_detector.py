@@ -1,5 +1,5 @@
 from facenet_pytorch import MTCNN
 
-import config
+from config import settings
 
-mtcnn = MTCNN(keep_all=True, device=config.INFERENCE_DEVICE)
+mtcnn = MTCNN(keep_all=True, device=settings.inference_device)

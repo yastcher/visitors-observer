@@ -1,6 +1,6 @@
 from telegram import Bot
 
-import config
+from config import settings
 
 
-bot = Bot(token=config.TELEGRAM_BOT_TOKEN)
+bot = Bot(token=settings.telegram_bot_token)
