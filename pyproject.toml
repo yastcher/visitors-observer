@@ -1,0 +1,86 @@
+[project]
+name = "visitor-observer"
+version = "0.1.0"
+description = "Recognize incoming faces"
+readme = "README.md"
+authors = [{ name = "Yast", email = "yastcher@gmail.com" }]
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi~=0.115",
+    "uvicorn~=0.34",
+    "pydantic-settings~=2.7.1",
+    "python-multipart>=0.0.6",
+    "python-telegram-bot>=20.3",
+    "httpx[http2]>=0.28.1",
+    "numpy>=1.25.1",
+    "opencv-python-headless>=4.7.0",
+    "facenet-pytorch>=2.5.3",
+    "torch>=2.0.1",
+    "torchvision>=0.15.2",
+]
+
+[dependency-groups]
+dev = [
+    "ruff~=0.14.0",
+    "pytest>=9.0.2",
+    "pytest-asyncio~=1.3",
+    "pytest-mock==3.15.1",
+    "pytest-cov~=7.0.0",
+]
+
+[tool.ruff]
+line-length = 100
+exclude = [
+    ".claude",
+    ".github",
+]
+
+[tool.ruff.lint]
+select = [
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
+    "F", # pyflakes
+    "UP", # pyupgrade
+    "B", # flake8-bugbear
+    "I", # isort
+    "G", # flake8-logging-format (logger %s not f-string)
+    "PLC", # pylint convention (PLC0415 — no local imports)
+    "PLR", # pylint refactor (PLR2004 — magic numbers)
+    "SIM", # flake8-simplify
+    "S", # flake8-bandit (security)
+    "RUF", # ruff-specific
+]
+ignore = [
+    "UP017", # datetime.UTC alias — conflicts with `import datetime` convention
+]
+fixable = ["ALL"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "PLR2004", "S105", "S106"]
+"config.py" = ["S104"]
+
+[tool.ruff.lint.pylint]
+max-args = 6
+
+[tool.ruff.lint.isort]
+known-local-folder = [
+    "src",
+    "tests",
+    "api", "cv", "tbot", "config",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+# skip-magic-trailing-comma = true
+
+[tool.pytest.ini_options]
+addopts = [
+    "-p", "pytest_cov",
+    "--cov=src",
+    "--cov-report=term-missing",
+    "--cov-report=json:coverage.json",
+    "--cov-branch",
+]
+testpaths = ["tests"]
+asyncio_mode = "auto"
