@@ -1,5 +1,3 @@
-import torch
-
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -8,9 +6,9 @@ class Settings(BaseSettings):
 
     debug: bool = True
 
-    inference_device: str = "cuda" if torch.cuda.is_available() else "cpu"
+    inference_device: str = "cpu"
 
-    cors_allow_origins: str = "[*]"
+    cors_allow_origins: list[str] = ["*"]
 
     telegram_bot_token: str = "Use https://t.me/BotFather for create bot token"
     chat_id: str = "Use https://t.me/userinfobot for get ids"
