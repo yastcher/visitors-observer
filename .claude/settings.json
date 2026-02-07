@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "defaultMode": "default",
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Edit",
+      "Write",
+      "Bash(uv run pytest*)",
+      "Bash(uv run ruff*)",
+      "Bash(ls *)",
+      "Bash(git diff*)",
+      "Bash(git status*)",
+      "Bash(git log*)"
+    ],
+    "deny": [
+      "Bash(rm -rf*)",
+      "Bash(* rm *)",
+      "Bash(sudo*)",
+      "Bash(git push*)"
+    ]
+  }
+}
