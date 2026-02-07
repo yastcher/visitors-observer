@@ -14,7 +14,7 @@ def _make_test_jpeg() -> BytesIO:
 
 def test_check_photo_no_faces(client):
     """Photo without faces -> status 1, no detail leak."""
-    with patch("api.router.mtcnn") as mock_mtcnn, patch("api.router.bot"):
+    with patch("src.api.router.mtcnn") as mock_mtcnn, patch("src.api.router.bot"):
         mock_mtcnn.detect.return_value = (None, None, None)
 
         response = client.post(
@@ -31,7 +31,7 @@ def test_check_photo_no_faces(client):
 
 def test_check_photo_with_faces(client):
     """Photo with face -> status 0, bot called."""
-    with patch("api.router.mtcnn") as mock_mtcnn, patch("api.router.bot") as mock_bot:
+    with patch("src.api.router.mtcnn") as mock_mtcnn, patch("src.api.router.bot") as mock_bot:
         mock_mtcnn.detect.return_value = (
             np.array([[10, 10, 50, 50]]),
             np.array([0.99]),

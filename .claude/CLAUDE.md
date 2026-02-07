@@ -77,3 +77,4 @@ Do not finish until lint, tests, and security review pass.
 
 - Comments and logs in English
 - Frontend: Solid.js
+- Never delete files, directories, or code whose purpose is unclear — ask the user first

@@ -5,9 +5,9 @@ import cv2
 import numpy as np
 from fastapi import APIRouter, File, Request, UploadFile
 
-from config import settings
-from cv.face_detector import mtcnn
-from tbot.command import bot
+from src.config import settings
+from src.cv.face_detector import mtcnn
+from src.tbot.command import bot
 
 logger = logging.getLogger(__name__)
 

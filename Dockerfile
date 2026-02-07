@@ -16,4 +16,4 @@ HEALTHCHECK --interval=1m --timeout=30s \
   CMD curl -f http://localhost:5555/status || exit 1
 
 EXPOSE 5555
-CMD ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5555"]
+CMD ["uv", "run", "uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "5555"]

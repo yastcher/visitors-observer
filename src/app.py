@@ -4,8 +4,8 @@ import logging
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-from api import router
-from config import settings
+from src.api import router
+from src.config import settings
 
 logging.basicConfig(level=logging.DEBUG if settings.debug else logging.INFO)
 

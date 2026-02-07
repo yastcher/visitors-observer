@@ -57,7 +57,7 @@ fixable = ["ALL"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S101", "PLR2004", "S105", "S106"]
-"config.py" = ["S104"]
+"src/config.py" = ["S104"]
 
 [tool.ruff.lint.pylint]
 max-args = 6
@@ -66,7 +66,6 @@ max-args = 6
 known-local-folder = [
     "src",
     "tests",
-    "api", "cv", "tbot", "config",
 ]
 
 [tool.ruff.format]
