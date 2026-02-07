@@ -10,7 +10,7 @@ class Settings(BaseSettings):
 
     cors_allow_origins: list[str] = ["*"]
 
-    telegram_bot_token: str = "Use https://t.me/BotFather for create bot token"
+    telegram_bot_token: str = "Use https://t.me/BotFather for create bot token"  # noqa: S105
     chat_id: str = "Use https://t.me/userinfobot for get ids"
 
 

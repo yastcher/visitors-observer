@@ -4,15 +4,21 @@ import logging
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-from config import settings
 from api import router
+from config import settings
 
 logging.basicConfig(level=logging.DEBUG if settings.debug else logging.INFO)
 
 
-KWARGS_OPEN_API = {
-    "title": "Visitor observer", "docs_url": "/docs", "redoc_url": "/redoc",
-} if settings.debug else {"docs_url": None, "redoc_url": None}
+KWARGS_OPEN_API = (
+    {
+        "title": "Visitor observer",
+        "docs_url": "/docs",
+        "redoc_url": "/redoc",
+    }
+    if settings.debug
+    else {"docs_url": None, "redoc_url": None}
+)
 app = FastAPI(**KWARGS_OPEN_API)
 
 

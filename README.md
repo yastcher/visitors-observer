@@ -1,64 +1,74 @@
-# visitors-observer
+# visitor-observer
 
-Collect and processed incoming events with face on photo
+Accepts photos via HTTP API, detects faces (MTCNN) and sends the result to a Telegram bot.
 
-## Rename .env.example to .env end fill :
+Принимает фото через HTTP API, детектит лица (MTCNN) и отправляет результат в Telegram-бот.
 
-    CHAT_ID=                (Use https://t.me/userinfobot for get ids)
-    TELEGRAM_BOT_TOKEN=     (Use https://t.me/BotFather for create bot token)
+## Quick start / Быстрый старт (uv)
 
-## Install from container:
+```bash
+cp .env.example .env
+# Fill in TELEGRAM_BOT_TOKEN and CHAT_ID in .env
 
-    ```
-    docker compose up --build
-    ```
+uv sync
+uv run uvicorn main:app --host 127.0.0.1 --port 5555
+```
 
-## Install from container and run as daemon:
+## Docker
 
-    ```
-    docker compose up --build -d
-    ```
+```bash
+cp .env.example visitor_observer.env
+# Fill in TELEGRAM_BOT_TOKEN and CHAT_ID in visitor_observer.env
 
-## Autodocumentation swagger:
+docker compose up --build
+```
 
-    ```
-    localhost:5555/docs
-    localhost:5555/redoc
-    ```
+## Deploy to server / Развёртывание на сервере
 
-## Install for local development:
+```bash
+sudo apt update && sudo apt upgrade
+sudo apt install -y pkg-config curl
 
-    ```
-    git clone https://github.com/yastcher/visitors-observer.git
-    ```
+# Install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-## Install requirements:
+# Clone repo / Клонировать репозиторий
+git clone https://github.com/yastcher/visitors-observer.git
+cd visitors-observer
 
-    ```
-    pip install --no-cache-dir -r  requirements.txt
-    pip install --no-cache-dir -r  requirements-torch.txt
-    pip install --no-cache-dir -r  requirements-compile.txt
-    ```
+cp .env.example .env
+# Fill in TELEGRAM_BOT_TOKEN and CHAT_ID in .env
 
-## For local development rename .env.example to .env end overload envs:
+uv sync
+uv run uvicorn main:app --host 0.0.0.0 --port 5555
+```
 
-    ```
-    TELEGRAM_BOT_TOKEN=     (Use https://t.me/BotFather for create bot token)
-    CHAT_ID=                (Use https://t.me/userinfobot for get ids)
+## API
 
-    https://core.telegram.org/bots/api#authorizing-your-bot
-    https://core.telegram.org/bots/features#botfather
-    https://t.me/userinfobot = your chat_id
-    ```
+**POST /api/check_photo** — upload a photo to check for faces / загрузить фото для проверки лиц.
 
-## Start app:
+```bash
+curl -X POST http://localhost:5555/api/check_photo \
+  -F "file=@photo.jpg"
+```
 
-    ```
-    uvicorn main:app --host 127.0.0.1 --port 5555
-    ```
+Response / Ответ: `{"message": "1 faces founded", "data": "...", "status": 0}`
 
-## Run tests (pytest):
+Swagger: [localhost:5555/docs](http://localhost:5555/docs)
 
-    ```
-    pytest -v
-    ```
+## Configuration / Настройка (.env)
+
+| Variable / Переменная | Description / Описание | Default |
+|---|---|---|
+| `TELEGRAM_BOT_TOKEN` | Bot token from [@BotFather](https://t.me/BotFather) | — |
+| `CHAT_ID` | Chat ID from [@userinfobot](https://t.me/userinfobot) | — |
+| `INFERENCE_DEVICE` | ML device (`cpu` / `cuda`) | `cpu` |
+| `DEBUG` | Enable Swagger and debug logs | `true` |
+| `CORS_ALLOW_ORIGINS` | JSON list of origins | `["*"]` |
+
+## Tests / Тесты
+
+```bash
+uv sync --group dev
+uv run pytest -v
+```
